@@ -11,8 +11,13 @@
 <body>
     <div class="container text-center">
         <div class=mars-text>
+            text1="I am from Mars"
+            text2="These are news from Mars and pretty images from home"
            <h1>{{text1}}</h1>
            <h2>{{text2}}</h2>
+           <br>
+           <hr>
+        
            <p>The news from Mars are obtained from NASA website and pictures are extracted from:
                https://mars.nasa.gov/news/
               The JPL website (not used) is 
@@ -21,33 +26,42 @@
                https://space-facts.com/mars/
            </p>    
            <a href="/bio">About the autor</a>
-           <!--Back to home page
+
            <a href="/">Home</a>
+           <table border="1">
+               <tr>
+                   <th>Hemisphere</th>
+                   <th>Links</th>
+               </tr>
+           </table>
 
-           #<ul style="list-style: none;">
-            <!jinja templates
-           #{% for name in Sources %}
-           #<li>{{name}}</li>
-           #{% endfor %}
-           #</ul>
+           <ul style="list-style: none;">
+<!jinja templates
+            {% for hemisphere in HemImages %}
+                <tr>
+                    <td>{{HemImages.titlist}}</td>
+                    <td>{{HemImages.links}}</td>
+                </tr>
+            {% endfor %}
+           </ul>
 
-           #<ul style="dict-style: none;>
+           <!<ul style="dict-style": none;>
             <!jinja templates
-               #{% for name2 in Facts %}
-                   #<li>{{dict.item1}}</li>
-                   #<li>{{dict.item2}}</li>
-                   #<li>{{dict.item3}}</li>
-                   #<li>{{dict.item4}}</li>
-                   #<li>{{name2}}</li>
-               #{% endfor %}
-           #</ul>
+               <!{% for name2 in Facts %}
+                   <!<li>{{dict.item1}}</li>
+                   <!<li>{{dict.item2}}</li>
+                   <!<li>{{dict.item3}}</li>
+                   <!<li>{{dict.item4}}</li>
+                   <!<li>{{name2}}</li>
+               <!{% endfor %}
+           <!</ul> 
 
-           #<ul style="dict-style: none;>
+           <ul style="dict-style": none;>
             <!jinja templates
-               #{% for name3 in MarsNews %}
-                   #<li>{{hemispheres.name}}{{hemispheres.link}}</li>
-               #{% endfor %}
-           #</ul>
+               {% for name3 in MarsNews %}
+                   <li>{{hemispheres.name}}{{hemispheres.link}}</li>
+               {% endfor %}
+           </ul>
 
            #<table>{{Facts}}</table>    
            #<table>{{MarsNews}}</table>
