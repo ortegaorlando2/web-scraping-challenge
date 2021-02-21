@@ -26,7 +26,7 @@
     
         <div class="row" id="Mars-Stuff">
             <div class="col-md-12">
-                
+                <h3>Clik the image to see a large picture</h3>
                 <table>
                     <tr>
                         <th>Mars Hemispheres</th>
@@ -42,7 +42,8 @@
                                     <h4 class="card-title">{{pho.Hemisphere}}</h4>
                                 </td>
                                 <td>
-                                    <img href="default.asp"><img src={{pho.Image}} style="width:42px;height:42px;"></img></a>
+                                    <a href="{{pho.Image}}">
+                                    <img src={{pho.Image}} style="width:42px;height:42px;"></a>
                                 </td>
                             </div>
                         </div>
@@ -66,14 +67,19 @@
         <br>
         <h3></h3>
         <a href="/scrape"></a>
-        <h3>Links</h3>
+        <h3>Links to Images</h3>
         <ul>
+            <table>
             {% for pho in MarsPhotos %}
-            {{pho.Hemisphere}}{{pho.Image}}            
+            <tr>
+            <td>{{pho.Hemisphere}}</td>
+            <td>{{pho.Image}}</td> 
+            </tr>           
             {% endfor %}
+            </table>
         </ul>
         <hr>
-        <h3>MarsFacts</h3>
+        <h3>Mars Facts</h3>
         <table>
             {% for fac1 in MarsFacts1 %}
             <tr>

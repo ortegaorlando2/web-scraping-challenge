@@ -22,10 +22,12 @@ db = client.MarsPhotos_db
 HemImages=db.HemImages
 Facts1=db.Facts1
 Facts2=db.Facts2
+MarsPhotos=db.MarsPhotos
 # Drops collection if available to remove duplicates
 db.HemImages.drop()
 db.Facts1.drop()
 db.Facts2.drop()
+
 #Initialize some variables
 dicti={"":""}
 hemispheres=[]
@@ -36,15 +38,12 @@ t_html=""
 #run remote class and method to obtain data scraped from websites
 # scrape_mars.myClass.scrape(dicti,hemispheres,title3)
 
-def scrape():
-    myClass.scrape(dicti,hemispheres,texto3)
-    #print(f[0])
-    return render_template("index.html", News=texto3)
+# def scrape():
+#     instance=myClass.scrape(dicti,hemispheres,texto3)
+#     print(texto3)
+#     return render_template("index.html", News=texto3)
 
-print(hemispheres)
-
-#temporarilly defining the dictionary until the websites respond
-#function to insert Photos data into collection
+# print(instance)
 
 
 @app.route("/scrape")
@@ -52,11 +51,12 @@ print(hemispheres)
 # hemispheres=[]
 def scraper():
     #Photos_data={}
-    MarsPhotos = db.MarsPhotos_db.HemImages
-    # f=myClass.scrape(dicti,hemispheres,texto3)
-    # print(f.hemispheres)
-    #
-    MarsPhotos.insert_many(f.hemispheres)
+    MarsPhotos = db.MarsPhotos
+    class_instance =scrape_mars.myClass(dicti,hemispheres,texto3,t_html,textoTitle)
+    class_instance.scrape(dicti,hemispheres,texto3,t_html,textoTitle)
+    print(hemispheres)
+    print(texto3)
+    MarsPhotos.insert_many(hemispheres)
     return redirect("/", code=302) 
 
 db.HemImages.insert_many(

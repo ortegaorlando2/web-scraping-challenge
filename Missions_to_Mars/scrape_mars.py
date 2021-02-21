@@ -1,11 +1,15 @@
 #define a class to be called from another file
 class myClass():
     #create the constructor defining the variable hemispheres
-    def __init__(self,hemisph):
-        self.hemisph=hemisph
+    def __init__(self,dicti,hemispheres,texto3,t_html,textoTitle):
+        self.dicti=dicti
+        self.hemispheres=hemispheres
+        self.texto3=texto3
+        self.t_html=t_html
+        self.textoTitle=textoTitle
         
     #create the function that runs the Mars scraping script
-    def scrape(self,hemispheres,title3):
+    def scrape(self,dicti,hemispheres,texto3,t_html,textoTitle):
     # Dependencies
 
         from bs4 import BeautifulSoup as bs
@@ -173,7 +177,7 @@ class myClass():
         #inspecting the dataframe for images
         pd.DataFrame({titlist[i]: links[i] for i in range(len(links))}, index=[0])
 
-        hemispheres=[]
+        #hemispheres=[]
         
         # saving a list of dictionaries with Mars images information
         for i in range(4):
@@ -182,5 +186,5 @@ class myClass():
 
         driver.close()
         #print(hemispheres)
-        return hemispheres, texto3
+        return hemispheres, texto3,t_html,textoTitle
 
