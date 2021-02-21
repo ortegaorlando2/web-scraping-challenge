@@ -5,7 +5,7 @@ class myClass():
         self.hemisph=hemisph
         
     #create the function that runs the Mars scraping script
-    def scrape(self,hemispheres):
+    def scrape(self,hemispheres,title3):
     # Dependencies
 
         from bs4 import BeautifulSoup as bs
@@ -177,13 +177,10 @@ class myClass():
         
         # saving a list of dictionaries with Mars images information
         for i in range(4):
-            dic={titlist[i]:links[i]}
+            dic={"Hemisphere":titlist[i], "Image":links[i]}
             hemispheres.append(dic)
 
+        driver.close()
         #print(hemispheres)
-        return hemispheres
+        return hemispheres, texto3
 
-        #defining a function to call several times the website and click on each image
-            
-        #print(hemispheres)
-        return hemispheres

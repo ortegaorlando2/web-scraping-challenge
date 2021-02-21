@@ -1,38 +1,93 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <head>
         <meta charset="UTF-8">
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <title>Mars Page</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <style>
+            table, th, td {
+              border: 1px solid black;
+              border-collapse: collapse;
+            }
+        </style>
+        
     </head>
     <body>
-        <h1>Welcome to my rough Mars API</h1>
-        <br>
+        <div class="container"></div>
+            <div class="Mypage">
+            <h1>Welcome to my rough Mars API</h1>
+            <p><a class="btn btn-primary btn-lg" href="/scrape" role="button">Extract data here</a></p>
+            <br>
         <h2>What's New</h2>
+            <h3>{{News}}</h3>
     
+        <div class="row" id="Mars-Stuff">
+            <div class="col-md-12">
+                
+                <table>
+                    <tr>
+                        <th>Mars Hemispheres</th>
+                        <th>Image</th>
+                        
+                    </tr>
+                {% for pho in MarsPhotos %}
+                <tr>
+                    <div class="col-lg-4">
+                        <div class="card" style="width: 20rem;">
+                            <div class="card-body">
+                                <td>
+                                    <h4 class="card-title">{{pho.Hemisphere}}</h4>
+                                </td>
+                                <td>
+                                    <img href="default.asp"><img src={{pho.Image}} style="width:42px;height:42px;"></img></a>
+                                </td>
+                            </div>
+                        </div>
+                    </div>
+                </tr>    
+                {% endfor %}
+                    <!-- <td><img src='https://astropedia.astrogeology.usgs.gov/download/Mars/Viking/cerberus_enhanced.tif/full.jpg' 
+                        width="50" height="33"></img></td>
+                    <td><img src="https://astropedia.astrogeology.usgs.gov/download/Mars/Viking/schiaparelli_enhanced.tif/full.jpg"
+                        width="50" height="33"></img></td></img></td>
+                    </td><img src="https://astropedia.astrogeology.usgs.gov/download/Mars/Viking/syrtis_major_enhanced.tif/full.jpg"
+                        width="50" height="33"></img></td>><img></td>
+                    </td><img src="https://astropedia.astrogeology.usgs.gov/download/Mars/Viking/valles_marineris_enhanced.tif/full.jpg"
+                        width="50" height="33"></img></td>></img></td>                -->
+                </table>
+            </div>
+        </div>
+
+
         <hr>
         <br>
-        <h3>Look how pretty is Mars</h3>
-        <a href="/scrape">Mars Hemispheres</a>
+        <h3></h3>
+        <a href="/scrape"></a>
+        <h3>Links</h3>
         <ul>
-            <h6>click here</h6>
-            
             {% for pho in MarsPhotos %}
-            <li>{{pho.Hemisphere}}{{pho.Image}}</li>            
+            {{pho.Hemisphere}}{{pho.Image}}            
             {% endfor %}
         </ul>
         <hr>
-        <ul>
-            <tr>
-                <h3>MarsFacts</h3>
-
-            </tr>
+        <h3>MarsFacts</h3>
+        <table>
             {% for fac1 in MarsFacts1 %}
-            <li>{{fac1.Fact}}{{fac1.Value}}</li>
+            <tr>
+                <td>{{fac1.Fact}}</td>
+                <td>{{fac1.Value}}</td>
+            </tr>
             {% endfor %}
             {% for fac2 in MarsFacts2 %}
-            <li>{{fac2.Fact}}{{fac2.Value}}</li>
+            <tr>
+                <td>{{fac2.Fact}}</td>
+                <td>{{fac2.Value}}</td>            
+            </tr>
             {% endfor %}
-        </ul>
+        </table>
 
         <ul>
             <h3>Sources<h3>

@@ -1,11 +1,13 @@
 # Import Flask
-from flask import Flask, render_template
+from flask import Flask, render_template, redirect
 # Import our pymongo library, which lets us connect our Flask app to our Mongo database.
 import pymongo
 from pymongo import MongoClient
+from flask_pymongo import PyMongo
 #Import my scraping class
 import scrape_mars
 from scrape_mars import myClass
+ 
 
 # Create an instance of our Flask app.
 app = Flask(__name__)
@@ -32,41 +34,49 @@ texto3=""
 t_html=""
 
 #run remote class and method to obtain data scraped from websites
-# f=myClass.scrape(dicti,hemispheres)
-# print(f)
+# scrape_mars.myClass.scrape(dicti,hemispheres,title3)
+
+def scrape():
+    myClass.scrape(dicti,hemispheres,texto3)
+    #print(f[0])
+    return render_template("index.html", News=texto3)
+
+print(hemispheres)
 
 #temporarilly defining the dictionary until the websites respond
 #function to insert Photos data into collection
+
 
 @app.route("/scrape")
 # dicti={}
 # hemispheres=[]
 def scraper():
-    dicti={}
-    hemispheres=[]
+    #Photos_data={}
     MarsPhotos = db.MarsPhotos_db.HemImages
-    Photos_data = scrape_mars.myClass.scrape(dicti,hemispheres)
-    MarsPhotos.insert_many(Photos_data)
+    # f=myClass.scrape(dicti,hemispheres,texto3)
+    # print(f.hemispheres)
+    #
+    MarsPhotos.insert_many(f.hemispheres)
     return redirect("/", code=302) 
 
-# db.HemImages.insert_many(
-# [{'Hemisphere':'Cerberus Hemisphere Enhanced', 'Image':'https://astrogeology.usgs.gov/search/map/Mars/Viking/cerberus_enhanced'}, 
-#     {'Hemisphere':'Schiaparelli Hemisphere Enhanced', 'Image':'https://astrogeology.usgs.gov/search/map/Mars/Viking/schiaparelli_enhanced'},
-#      {'Hemisphere':'Syrtis Major Hemisphere Enhanced', 'Image':'https://astrogeology.usgs.gov/search/map/Mars/Viking/syrtis_major_enhanced'}, 
-#      {'Hemisphere':'Valles Marineris Hemisphere Enhanced', 'Image':'https://astrogeology.usgs.gov/search/map/Mars/Viking/valles_marineris_enhanced'}]
-# )
+db.HemImages.insert_many(
+[{'Hemisphere':'Cerberus Hemisphere', 'Image':'https://astropedia.astrogeology.usgs.gov/download/Mars/Viking/cerberus_enhanced.tif/full.jpg'}, 
+    {'Hemisphere':'Schiaparelli Hemisphere', 'Image':'https://astropedia.astrogeology.usgs.gov/download/Mars/Viking/schiaparelli_enhanced.tif/full.jpg'},
+     {'Hemisphere':'Syrtis Major Hemisphere', 'Image':'https://astropedia.astrogeology.usgs.gov/download/Mars/Viking/syrtis_major_enhanced.tif/full.jpg'}, 
+     {'Hemisphere':'Valles Marineris Hemisphere', 'Image':'https://astropedia.astrogeology.usgs.gov/download/Mars/Viking/valles_marineris_enhanced.tif/full.jpg'}]
+)
 
 db.Facts1.insert_one({"Fact":'Equatorial Diameter=	', 'Value':'6,792 km'})
 db.Facts1.insert_one({"Fact":'Polar Diameter= ','Value':'6,752 km'})
 db.Facts1.insert_one({"Fact":'Mass= ', 'Value':'6.39 × 10^23 kg (0.11 Earths)'})
 db.Facts1.insert_one({"Fact":'Moons= ','Value':'6.39 × 10^23 kg (0.11 Earths)'})
 db.Facts1.insert_one({"Fact":'Orbit Distance= ','Value':'2 (Phobos & Deimos)'})
-
 db.Facts2.insert_one({"Fact":'Orbit Period= ','Value':'687 days (1.9 years)'})
 db.Facts2.insert_one({"Fact":'Surface Temperature= ','Value':'-87 to -5 °C'})
 db.Facts2.insert_one({"Fact":'First Record: ','Value':'2nd millennium BC'})
 db.Facts2.insert_one({"Fact":'Recorded By: ','Value':'Egyptian astronomers'})
 
+#mongo = PyMongo(app, uri="mongodb://localhost:27017/MarsPhotos")
 
 # Set route
 @app.route('/')
@@ -78,7 +88,10 @@ def index():
     # Store the collection in a list
     MarsFacts2 = list(db.Facts2.find())
     # Return the template with the items passed in
-    return render_template('index.html', MarsPhotos=MarsPhotos, MarsFacts1=MarsFacts1, MarsFacts2=MarsFacts2,)
+    News=texto3
+    OneHemisphere=""#mongo.db.HemImages.find_one_or_404()
+    return render_template('index.html', MarsPhotos=MarsPhotos, MarsFacts1=MarsFacts1, MarsFacts2=MarsFacts2, 
+    OneHemisphere=OneHemisphere, News=News)
 
    
 
