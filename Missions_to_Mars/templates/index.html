@@ -2,71 +2,44 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>What is New in Mars</title>
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/botstrap.min.css">
-        <link rel="stylesheet" href="static/css/style.css">
-        <link rel="stylesheet" href="static/images/MeProfiles.JPG">
+        <title>Mars Page</title>
     </head>
+    <body>
+        <h1>Welcome to my rough Mars API</h1>
+        <br>
+        <h2>What's New</h2>
     
-<body>
-    <div class="container text-center">
-        <div class=mars-text>
-            text1="I am from Mars"
-            text2="These are news from Mars and pretty images from home"
-           <h1>{{text1}}</h1>
-           <h2>{{text2}}</h2>
-           <br>
-           <hr>
-        
-           <p>The news from Mars are obtained from NASA website and pictures are extracted from:
-               https://mars.nasa.gov/news/
-              The JPL website (not used) is 
-               https://www.jpl.nasa.gov/spaceimages/?search=&category=Mars
-              Facts about Mars were scraped of:
-               https://space-facts.com/mars/
-           </p>    
-           <a href="/bio">About the autor</a>
-
-           <a href="/">Home</a>
-           <table border="1">
-               <tr>
-                   <th>Hemisphere</th>
-                   <th>Links</th>
-               </tr>
-           </table>
-
-           <ul style="list-style: none;">
-<!jinja templates
-            {% for hemisphere in HemImages %}
-                <tr>
-                    <td>{{HemImages.titlist}}</td>
-                    <td>{{HemImages.links}}</td>
-                </tr>
+        <hr>
+        <br>
+        <h3>Look how pretty is Mars</h3>
+        <a href="/scrape">Mars Hemispheres</a>
+        <ul>
+            <h6>click here</h6>
+            
+            {% for pho in MarsPhotos %}
+            <li>{{pho.Hemisphere}}{{pho.Image}}</li>            
             {% endfor %}
-           </ul>
+        </ul>
+        <hr>
+        <ul>
+            <tr>
+                <h3>MarsFacts</h3>
 
-           <!<ul style="dict-style": none;>
-            <!jinja templates
-               <!{% for name2 in Facts %}
-                   <!<li>{{dict.item1}}</li>
-                   <!<li>{{dict.item2}}</li>
-                   <!<li>{{dict.item3}}</li>
-                   <!<li>{{dict.item4}}</li>
-                   <!<li>{{name2}}</li>
-               <!{% endfor %}
-           <!</ul> 
+            </tr>
+            {% for fac1 in MarsFacts1 %}
+            <li>{{fac1.Fact}}{{fac1.Value}}</li>
+            {% endfor %}
+            {% for fac2 in MarsFacts2 %}
+            <li>{{fac2.Fact}}{{fac2.Value}}</li>
+            {% endfor %}
+        </ul>
 
-           <ul style="dict-style": none;>
-            <!jinja templates
-               {% for name3 in MarsNews %}
-                   <li>{{hemispheres.name}}{{hemispheres.link}}</li>
-               {% endfor %}
-           </ul>
+        <ul>
+            <h3>Sources<h3>
+            <li>https://mars.nasa.gov/news/</li>
+            <li>https://www.jpl.nasa.gov/spaceimages/?search=&category=Mars</li>
+            <li>https://space-facts.com/mars/</li>
+        </ul>
 
-           #<table>{{Facts}}</table>    
-           #<table>{{MarsNews}}</table>
-        </div>
-    </div>
-</body>
-<html>
-    
+    </body>
+</html>
