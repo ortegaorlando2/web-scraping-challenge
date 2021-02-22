@@ -9,7 +9,7 @@ class myClass():
         self.textoTitle=textoTitle
         
     #create the function that runs the Mars scraping script
-    def scrape(self,dicti,hemispheres,texto3,t_html,textoTitle):
+    def scrape(dicti,hemispheres,texto3,t_html,textoTitle):
     # Dependencies
 
         from bs4 import BeautifulSoup as bs
@@ -88,8 +88,8 @@ class myClass():
         soup3=bs(r3.text,'lxml')
 
         #This is the first paragraph of the main text of these news
-        texto3=soup3.find('p')
-        texto3
+        texto3=soup3.find('p').text.strip()
+        
 
         #define a variable with the string of the Space facts website
         url4='https://space-facts.com/mars/'
@@ -117,7 +117,7 @@ class myClass():
         t_html=pd.DataFrame.to_html(df)
         #t_html
 
-        driver.implicitly_wait(10)
+        driver.implicitly_wait(5)
 
         #website for the hemisphere images of Mars
         url5='https://astrogeology.usgs.gov/search/results?q=hemisphere+enhanced&k1=target&v1=Mars'
@@ -189,6 +189,6 @@ class myClass():
             hemispheres.append(dic)
 
         driver.close()
-        #print(hemispheres)
+        #print(hemispheres,texto3,t_html,textoTitle)
         return hemispheres, texto3,t_html,textoTitle
 

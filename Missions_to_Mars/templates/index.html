@@ -8,33 +8,65 @@
         <title>Mars Page</title>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
         <style>
-            table, th, td {
-              border: 1px solid black;
-              border-collapse: collapse;
-            }
+        table { font-family: 'Arial'; margin: 25px auto; border-collapse: collapse; border: 1px solid #eee;
+        border-bottom: 2px solid #4b280b; box-shadow: 0px 0px 20px rgba(0,0,0,0.10),
+        0px 10px 20px rgba(0,0,0,0.05), 0px 20px 20px rgba(0,0,0,0.05), 0px 30px 20px rgba(0,0,0,0.05);
+        tr {background: #f4f4f4}; 
+        td {color: #555;}}
+        td {color: rgb(85, 39, 12); border: 1px solid #eee; padding: 12px 35px; border-collapse: collapse;}
+        th {background: #c26a0a; color: #fff; text-transform: uppercase; font-size: 12px; }
+
         </style>
         
     </head>
     <body>
         <div class="container"></div>
+
+            <h1>Welcome to my Mars API</h1>
             <div class="Mypage">
-                <a href="{{img_url}}">
-                    <img src={{img_url}} style="width:100px;height:100px;"></a>
-            <h1>Welcome to my rough Mars API</h1>
-            <p><a class="btn btn-primary btn-lg" href="/scrape" role="button">Extract data here</a></p>
+                <table>
+                <tr>
+                    <th>
+                    <a href="{{img_url}}">
+                        <img src={{img_url}} style="width:200px;height:200px;"></a>
+                    </th>
+                    <th>
+                    <h6 style= position:absolute; bottom=0;>----Image of Mars Extracted from Wikipedia</h6>
+                    </th>
+                    <th>&nbsp</th>
+                    <th>
+                    <p><a class="btn btn-primary btn-lg" href="/scrape" role="button">Update Here</a></p>
+                    </th>
+                </tr>
+                </table>
+                
+            
             <br>
         <h2>What's New</h2>
-            <h3>{{News}}</h3>
+                <table>
+                    <tr>
+                        <th>
+                            <a href="https://mars.nasa.gov/system/resources/detail_files/25609_1-PIA24428-1200.jpg">
+                                <img src="https://mars.nasa.gov/system/resources/detail_files/25609_1-PIA24428-1200.jpg" style="width:200px;height:200px;"></a>
+                            
+                        </th>                    
+                        <th>{{News}}</th>
+                        <td>{{paragraph}}</td>
+                    </tr>
+
+                </table>
+            
     
         <div class="row" id="Mars-Stuff">
             <div class="col-md-12">
-                <h3>Clik the image to see a large picture</h3>
+                <h2>Mars Hemispheres</h2>
+                <h4>Click each image to see a large picture</h4>
                 <table>
-                    <tr>
+                    <!-- <tr> -->
                         <th>Mars Hemispheres</th>
                         <th>Image</th>
-                        
-                    </tr>
+                        <th>Links to Images</th>
+                    <!-- </tr> -->
                 {% for pho in MarsPhotos %}
                 <tr>
                     <div class="col-lg-4">
@@ -47,19 +79,13 @@
                                     <a href="{{pho.Image}}">
                                     <img src={{pho.Image}} style="width:42px;height:42px;"></a>
                                 </td>
+                                <td>{{pho.Image}}</td>
                             </div>
                         </div>
                     </div>
                 </tr>    
                 {% endfor %}
-                    <!-- <td><img src='https://astropedia.astrogeology.usgs.gov/download/Mars/Viking/cerberus_enhanced.tif/full.jpg' 
-                        width="50" height="33"></img></td>
-                    <td><img src="https://astropedia.astrogeology.usgs.gov/download/Mars/Viking/schiaparelli_enhanced.tif/full.jpg"
-                        width="50" height="33"></img></td></img></td>
-                    </td><img src="https://astropedia.astrogeology.usgs.gov/download/Mars/Viking/syrtis_major_enhanced.tif/full.jpg"
-                        width="50" height="33"></img></td>><img></td>
-                    </td><img src="https://astropedia.astrogeology.usgs.gov/download/Mars/Viking/valles_marineris_enhanced.tif/full.jpg"
-                        width="50" height="33"></img></td>></img></td>                -->
+
                 </table>
             </div>
         </div>
@@ -67,7 +93,7 @@
 
         <hr>
         <br>
-        <h3></h3>
+        <!-- <h3></h3>
         <a href="/scrape"></a>
         <h3>Links to Images</h3>
         <ul>
@@ -79,11 +105,11 @@
             </tr>           
             {% endfor %}
             </table>
-        </ul>
+        </ul> -->
         <hr>
         <h3>Mars Facts</h3>
         <table>
-            {% for fac1 in MarsFacts1 %}
+            {% for fac1 in MarsFacts2 %}
             <tr>
                 <td>{{fac1.Fact}}</td>
                 <td>{{fac1.Value}}</td>

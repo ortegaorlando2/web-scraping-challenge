@@ -13,7 +13,7 @@ from scrape_mars import myClass
 app = Flask(__name__)
 
 #Get image for decoration from Activities folder Extra Content
-# _________________________________________________________
+#_________________________________________________________
 from bs4 import BeautifulSoup
 from splinter import Browser
 executable_path = {"executable_path": 'C:/Webdriver/bin/chromedriver'}
@@ -58,20 +58,23 @@ client = pymongo.MongoClient(conn)
 db = client.MarsPhotos_db
 #Mars_collection that will contain the data
 HemImages=db.HemImages
-Facts1=db.Facts1
-Facts2=db.Facts2
+MarsFacts1=db.MarsFacts1
+MarsFacts2=db.MarsFacts2
 MarsPhotos=db.MarsPhotos
+
 # Drops collection if available to remove duplicates
 db.HemImages.drop()
-db.Facts1.drop()
-db.Facts2.drop()
+db.MarsFacts1.drop()
+db.MarsFacts2.drop()
+db.MarsPhotos.drop()
 
-#Initialize some variables
+#Initialize remote class variables
 dicti={"":""}
 hemispheres=[]
 textoTitle=""
 texto3=""
 t_html=""
+#______________________________________________________________________
 
 #run remote class and method to obtain data scraped from websites
 # scrape_mars.myClass.scrape(dicti,hemispheres,title3)
@@ -84,55 +87,105 @@ t_html=""
 # print(instance)
 
 
+#Retrieving all results from remote class
+myclass=myClass(dicti,hemispheres,texto3,t_html,textoTitle)
+hemispheres,texto3,t_html,textoTitle = myclass.scrape(hemispheres,texto3,t_html,textoTitle)
+
+print(hemispheres,texto3,t_html,textoTitle)
+
+Title=textoTitle
+paragraph=texto3
+
+#making a dictionary with the latest News from Mars
+News = {'Title':textoTitle, "paragraph":texto3}          
+MarsFacts1.insert_one(News)
+
+HemImages.insert_one(hemispheres)
+
+# Facts={"Table":t_html}
+# MarsFacts2.insert_one(Facts)
+
+
+
+print(HemImages)
+
+#______________________________________________________________________
+# running the remote class inside an app
 @app.route("/scrape")
 # dicti={}
 # hemispheres=[]
 def scraper():
-    #Photos_data={}
-    MarsPhotos = db.MarsPhotos
-    class_instance =scrape_mars.myClass(dicti,hemispheres,texto3,t_html,textoTitle)
-    class_instance.scrape(dicti,hemispheres,texto3,t_html,textoTitle)
-    print(hemispheres)
-    print(texto3)
+    # #Photos_data={}
+    # HemImages=db.HemImages
+    # Facts1=db.Facts1
+    # Facts2=db.Facts2
+    # MarsPhotos = db.MarsPhotos
+    # #class_instance =myclass(dicti,hemispheres,texto3,t_html,textoTitle)
+    # myclass.scrape(dicti,hemispheres,texto3,t_html,textoTitle)
+    # #print(hemispheres)
+    # #print(texto3)
+    # Facts2.insert_one({'News':textoTitle})
+    # Facts2.insert_one({'paragraph':texto3})
+    # Facts1.insert_one({'Mars_Facts':t_html})
+    # #for i in hemispheres:
+    # MarsPhotos.update({}, )
+
     for i in hemispheres:
-        MarsPhotos.insert_one(i.Hemisphere)
-        MarsPhotos.insert_one(i.Image)
+    # Error handling
+        try:
+
+            hemispheres = hemispheres
+            if (hemispheres):
+            # Print results
+                print('-------------')
+
+            item={i}
+            HemImages.insert_one(item)
+        # Imageurl = f'{hemispheres["Image"]}'
+        # browser.visit(Imageurl)
+        # Image(url=f'{i.Image}.png')
+
+        except Exception as e:
+            print(e) 
+
     return redirect("/", code=302) 
+#______________________________________________________________________
 
-db.HemImages.insert_many(
-[{'Hemisphere':'Cerberus Hemisphere', 'Image':'https://astropedia.astrogeology.usgs.gov/download/Mars/Viking/cerberus_enhanced.tif/full.jpg'}, 
-    {'Hemisphere':'Schiaparelli Hemisphere', 'Image':'https://astropedia.astrogeology.usgs.gov/download/Mars/Viking/schiaparelli_enhanced.tif/full.jpg'},
-     {'Hemisphere':'Syrtis Major Hemisphere', 'Image':'https://astropedia.astrogeology.usgs.gov/download/Mars/Viking/syrtis_major_enhanced.tif/full.jpg'}, 
-     {'Hemisphere':'Valles Marineris Hemisphere', 'Image':'https://astropedia.astrogeology.usgs.gov/download/Mars/Viking/valles_marineris_enhanced.tif/full.jpg'}]
-)
+# IF EVERYTHIN GOES WONG 
+# db.HemImages.insert_many(
+# [{'Hemisphere':'Cerberus Hemisphere', 'Image':'https://astropedia.astrogeology.usgs.gov/download/Mars/Viking/cerberus_enhanced.tif/full.jpg'}, 
+#     {'Hemisphere':'Schiaparelli Hemisphere', 'Image':'https://astropedia.astrogeology.usgs.gov/download/Mars/Viking/schiaparelli_enhanced.tif/full.jpg'},
+#      {'Hemisphere':'Syrtis Major Hemisphere', 'Image':'https://astropedia.astrogeology.usgs.gov/download/Mars/Viking/syrtis_major_enhanced.tif/full.jpg'}, 
+#      {'Hemisphere':'Valles Marineris Hemisphere', 'Image':'https://astropedia.astrogeology.usgs.gov/download/Mars/Viking/valles_marineris_enhanced.tif/full.jpg'}]
+# )
 
-db.Facts1.insert_one({"Fact":'Equatorial Diameter=	', 'Value':'6,792 km'})
-db.Facts1.insert_one({"Fact":'Polar Diameter= ','Value':'6,752 km'})
-db.Facts1.insert_one({"Fact":'Mass= ', 'Value':'6.39 × 10^23 kg (0.11 Earths)'})
-db.Facts1.insert_one({"Fact":'Moons= ','Value':'6.39 × 10^23 kg (0.11 Earths)'})
-db.Facts1.insert_one({"Fact":'Orbit Distance= ','Value':'2 (Phobos & Deimos)'})
-db.Facts2.insert_one({"Fact":'Orbit Period= ','Value':'687 days (1.9 years)'})
-db.Facts2.insert_one({"Fact":'Surface Temperature= ','Value':'-87 to -5 °C'})
-db.Facts2.insert_one({"Fact":'First Record: ','Value':'2nd millennium BC'})
-db.Facts2.insert_one({"Fact":'Recorded By: ','Value':'Egyptian astronomers'})
+db.MarsFacts2.insert_one({"Fact":'Equatorial Diameter=	', 'Value':'6,792 km'})
+db.MarsFacts2.insert_one({"Fact":'Polar Diameter= ','Value':'6,752 km'})
+db.MarsFacts2.insert_one({"Fact":'Mass= ', 'Value':'6.39 × 10^23 kg (0.11 Earths)'})
+db.MarsFacts2.insert_one({"Fact":'Moons= ','Value':'6.39 × 10^23 kg (0.11 Earths)'})
+db.MarsFacts2.insert_one({"Fact":'Orbit Distance= ','Value':'2 (Phobos & Deimos)'})
+db.MarsFacts2.insert_one({"Fact":'Orbit Period= ','Value':'687 days (1.9 years)'})
+db.MarsFacts2.insert_one({"Fact":'Surface Temperature= ','Value':'-87 to -5 °C'})
+db.MarsFacts2.insert_one({"Fact":'First Record: ','Value':'2nd millennium BC'})
+db.MarsFacts2.insert_one({"Fact":'Recorded By: ','Value':'Egyptian astronomers'})
 
-#mongo = PyMongo(app, uri="mongodb://localhost:27017/MarsPhotos")
-
-# Set route
+#______________________________________________________________________
+# Set route to index.html to display data
 @app.route('/')
 def index():
     # Store the collection in a list
     MarsPhotos = list(db.HemImages.find())
     # Store the collection in a list
-    MarsFacts1 = list(db.Facts1.find())
+    MarsFacts1 = list(db.MarsFacts1.find())
+    News=MarsFacts1[0]['Title']
+    print(MarsFacts1)
+    # News = MarsFacts1.Title
+    # paragraph = paragraph
     # Store the collection in a list
-    MarsFacts2 = list(db.Facts2.find())
+    MarsFacts2 = list(db.MarsFacts2.find())
     # Return the template with the items passed in
-    Decor=Image(url='img.png')
-    News=texto3
-    OneHemisphere=""#mongo.db.HemImages.find_one_or_404()
-    return render_template('index.html', MarsPhotos=MarsPhotos, MarsFacts1=MarsFacts1, MarsFacts2=MarsFacts2, 
-    OneHemisphere=OneHemisphere, News=News, img_url=img_url)
+
+    return render_template('index.html', MarsPhotos=MarsPhotos, News=News, img_url=img_url, paragraph=paragraph, Table=MarsFacts2)
 
    
 
