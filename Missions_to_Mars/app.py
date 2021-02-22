@@ -69,10 +69,12 @@ db.MarsFacts2.drop()
 db.MarsPhotos.drop()
 
 #Initialize remote class variables
+import pandas as pd
 dicti={"":""}
 hemispheres=[]
 textoTitle=""
 texto3=""
+#d={"Fact":[],"Value":[]}
 t_html=""
 #______________________________________________________________________
 
@@ -96,14 +98,31 @@ print(hemispheres,texto3,t_html,textoTitle)
 Title=textoTitle
 paragraph=texto3
 
-#making a dictionary with the latest News from Mars
+#making a dictionary with the latest News from Mar
 News = {'Title':textoTitle, "paragraph":texto3}          
 MarsFacts1.insert_one(News)
 
-HemImages.insert_one(hemispheres)
 
-# Facts={"Table":t_html}
-# MarsFacts2.insert_one(Facts)
+for m in hemispheres:
+    HemImages.insert_one(m)
+
+#change dataframe table to html table
+
+# import io
+# data = io.StringIO(t_html)
+# print(data)
+# df = pd.read_csv(data, sep=",", header=None)
+
+# t_html = df.to_html() 
+  
+# write html table to file 
+text_file = open("index.html", "w") 
+text_file.write(t_html) 
+text_file.close() 
+
+
+Facts={"Table":t_html}
+MarsFacts2.insert_one(Facts)
 
 
 
@@ -129,18 +148,11 @@ def scraper():
     # Facts1.insert_one({'Mars_Facts':t_html})
     # #for i in hemispheres:
     # MarsPhotos.update({}, )
-
+    hemispheres=hemispheres
     for i in hemispheres:
     # Error handling
         try:
-
-            hemispheres = hemispheres
-            if (hemispheres):
-            # Print results
-                print('-------------')
-
-            item={i}
-            HemImages.insert_one(item)
+            HemImages.insert_one(i)
         # Imageurl = f'{hemispheres["Image"]}'
         # browser.visit(Imageurl)
         # Image(url=f'{i.Image}.png')
@@ -175,6 +187,8 @@ db.MarsFacts2.insert_one({"Fact":'Recorded By: ','Value':'Egyptian astronomers'}
 def index():
     # Store the collection in a list
     MarsPhotos = list(db.HemImages.find())
+    print(MarsPhotos)
+    # MarsPhotos1 = MarsPhotos
     # Store the collection in a list
     MarsFacts1 = list(db.MarsFacts1.find())
     News=MarsFacts1[0]['Title']
@@ -183,6 +197,8 @@ def index():
     # paragraph = paragraph
     # Store the collection in a list
     MarsFacts2 = list(db.MarsFacts2.find())
+    Table=MarsFacts2[0]['Table']
+ 
     # Return the template with the items passed in
 
     return render_template('index.html', MarsPhotos=MarsPhotos, News=News, img_url=img_url, paragraph=paragraph, Table=MarsFacts2)

@@ -31,7 +31,7 @@
                         <img src={{img_url}} style="width:200px;height:200px;"></a>
                     </th>
                     <th>
-                    <h6 style= position:absolute; bottom=0;>----Image of Mars Extracted from Wikipedia</h6>
+                    <h6 style="color:rgb(54, 35, 32);" margin-bottom: .4em;>Image of Mars Extracted from Wikipedia</h6>
                     </th>
                     <th>&nbsp</th>
                     <th>
@@ -65,7 +65,7 @@
                     <!-- <tr> -->
                         <th>Mars Hemispheres</th>
                         <th>Image</th>
-                        <th>Links to Images</th>
+                        <th>Images https</th>
                     <!-- </tr> -->
                 {% for pho in MarsPhotos %}
                 <tr>
@@ -75,11 +75,14 @@
                                 <td>
                                     <h4 class="card-title">{{pho.Hemisphere}}</h4>
                                 </td>
-                                <td>
-                                    <a href="{{pho.Image}}">
-                                    <img src={{pho.Image}} style="width:42px;height:42px;"></a>
-                                </td>
-                                <td>{{pho.Image}}</td>
+                                <th>
+                                    <img href="{{pho.Image}}">
+                                        <img src="{{pho.Image}}"></a>
+                                        <!-- style="width:62px;height:68px;" -->
+                                </th>
+                                <th>
+                                    <a href="{{pho.Image}}">Link</a>
+                                </th>
                             </div>
                         </div>
                     </div>
@@ -92,7 +95,17 @@
 
 
         <hr>
-        <br>
+
+
+        <!-- <div class="row" id="Mars-Stuff">
+            <div class="col-md-12">
+                <h2>Mars Facts</h2>
+                <h4>Extracted from https://space-facts.com/mars/</h4>
+                <a>
+                    {{Table}}
+                </a>
+            </div>
+        </div>        -->
         <!-- <h3></h3>
         <a href="/scrape"></a>
         <h3>Links to Images</h3>
@@ -109,7 +122,7 @@
         <hr>
         <h3>Mars Facts</h3>
         <table>
-            {% for fac1 in MarsFacts2 %}
+            {% for fac1 in Table %}
             <tr>
                 <td>{{fac1.Fact}}</td>
                 <td>{{fac1.Value}}</td>

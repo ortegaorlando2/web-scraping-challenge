@@ -180,9 +180,7 @@ class myClass():
 
         #inspecting the dataframe for images
         pd.DataFrame({titlist[i]: links[i] for i in range(len(links))}, index=[0])
-
-        #hemispheres=[]
-        
+       
         # saving a list of dictionaries with Mars images information
         for i in range(4):
             dic={"Hemisphere":titlist[i], "Image":links[i]}
@@ -190,5 +188,5 @@ class myClass():
 
         driver.close()
         #print(hemispheres,texto3,t_html,textoTitle)
-        return hemispheres, texto3,t_html,textoTitle
+        return hemispheres, texto3, t_html, textoTitle
 
