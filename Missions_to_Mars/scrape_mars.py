@@ -20,8 +20,12 @@ class myClass():
         from selenium import webdriver
 
         #telling the Chrome driver where is the executable
-        driver = Chrome(executable_path='C:/Webdriver/bin/chromedriver')
-
+        #driver = Chrome(executable_path='C:/Webdriver/bin/chromedriver')
+        
+        options = webdriver.ChromeOptions() 
+        options.add_experimental_option("excludeSwitches", ["enable-logging"])
+        driver = webdriver.Chrome(options=options, executable_path='C:/Webdriver/bin/chromedriver')
+        driver.get("https://www.google.com/")
 
         #defining a string variable with the website url
         url = "https://mars.nasa.gov/news/"

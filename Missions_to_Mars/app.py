@@ -12,6 +12,44 @@ from scrape_mars import myClass
 # Create an instance of our Flask app.
 app = Flask(__name__)
 
+#Get image for decoration from Activities folder Extra Content
+# _________________________________________________________
+from bs4 import BeautifulSoup
+from splinter import Browser
+executable_path = {"executable_path": 'C:/Webdriver/bin/chromedriver'}
+browser = Browser("chrome", **executable_path, headless=False)
+url = "https://en.wikipedia.org/wiki/Mars"
+browser.visit(url)
+xpath = '//td//a[@class="image"]/img'
+results = browser.find_by_xpath(xpath)
+img = results[0]
+img.click()
+
+url2 = browser.html
+soup = BeautifulSoup(url2, 'html.parser')
+img_url_temp1 = soup.find("tbody").find('a', class_='image')['href']
+img_url_temp=f'https://en.m.wikipedia.org/{img_url_temp1}'
+print(img_url_temp)
+
+browser.visit(img_url_temp)
+url3= browser.html
+soup2= BeautifulSoup(url3, "html.parser")
+img_url_file= soup2.find("div", class_='fullImageLink').find('a')['href']
+img_url=f'https:{img_url_file}'
+print(img_url)
+
+import requests
+import shutil
+response = requests.get(img_url, stream=True)
+with open('img.png', 'wb') as out_file:
+    shutil.copyfileobj(response.raw, out_file)
+from IPython.display import Image 
+Decor=Image(url='img.png')
+
+browser.quit()
+#______________________________________________________________________
+
+
 # Create connection variable
 conn = 'mongodb://localhost:27017'
 # Pass connection to the pymongo instance.
@@ -56,7 +94,9 @@ def scraper():
     class_instance.scrape(dicti,hemispheres,texto3,t_html,textoTitle)
     print(hemispheres)
     print(texto3)
-    MarsPhotos.insert_many(hemispheres)
+    for i in hemispheres:
+        MarsPhotos.insert_one(i.Hemisphere)
+        MarsPhotos.insert_one(i.Image)
     return redirect("/", code=302) 
 
 db.HemImages.insert_many(
@@ -88,10 +128,11 @@ def index():
     # Store the collection in a list
     MarsFacts2 = list(db.Facts2.find())
     # Return the template with the items passed in
+    Decor=Image(url='img.png')
     News=texto3
     OneHemisphere=""#mongo.db.HemImages.find_one_or_404()
     return render_template('index.html', MarsPhotos=MarsPhotos, MarsFacts1=MarsFacts1, MarsFacts2=MarsFacts2, 
-    OneHemisphere=OneHemisphere, News=News)
+    OneHemisphere=OneHemisphere, News=News, img_url=img_url)
 
    
 
