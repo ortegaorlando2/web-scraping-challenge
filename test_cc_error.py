@@ -5,12 +5,9 @@ import pymongo
 from pymongo import MongoClient
 from flask_pymongo import PyMongo
 #Import my scraping class
-import scrape_mars
-from scrape_mars import myClass
+# import scrape_mars
+# from scrape_mars import myClass
  
-
-# Create an instance of our Flask app.
-app = Flask(__name__)
 
 #Get image for decoration from Activities folder Extra Content
 #_________________________________________________________
@@ -48,7 +45,6 @@ Decor=Image(url='img.png')
 
 browser.quit()
 #______________________________________________________________________
-
 
 # Create connection variable
 conn = 'mongodb://localhost:27017'
@@ -129,23 +125,6 @@ MarsFacts2.insert_one(Facts)
 print(HemImages)
 
 #______________________________________________________________________
-# running the remote class inside an app
-@app.route("/scrape")
-# dicti={}
-# hemispheres=[]
-def scraper():
-
-    for i in hemispheres:
-    # Error handling
-        try:
-            Imageurl = f'{hemispheres["Image"]}'
-            browser.visit(Imageurl)
-            Image(url=f'{i.Image}.png')
-
-        except Exception as e:
-            print(e) 
-
-    return redirect("/", code=302) 
 #______________________________________________________________________
 
 # IF EVERYTHIN GOES WONG 
@@ -165,31 +144,3 @@ db.MarsFacts2.insert_one({"Fact":'Orbit Period= ','Value':'687 days (1.9 years)'
 db.MarsFacts2.insert_one({"Fact":'Surface Temperature= ','Value':'-87 to -5 °C'})
 db.MarsFacts2.insert_one({"Fact":'First Record: ','Value':'2nd millennium BC'})
 db.MarsFacts2.insert_one({"Fact":'Recorded By: ','Value':'Egyptian astronomers'})
-
-#______________________________________________________________________
-# Set route to index.html to display data
-@app.route('/')
-def index():
-    # Store the collection in a list
-    MarsPhotos = list(db.HemImages.find())
-    MarsPhotos1 = MarsPhotos[0]["Image"]
-    print(MarsPhotos)
-    MarsFacts1 = list(db.MarsFacts1.find())
-    News=MarsFacts1[0]['Title']
-    print(MarsFacts1)
-    MarsFacts2 = list(db.MarsFacts2.find())
-    Table=MarsFacts2[0]['Table']
-
-    Jpegs=["cerberus_enhanced.jpg",
-    "schiaparelli_enhanced.jpg",
-    "syrtis_mayor_enhanced.jpg",
-    "Valles_marineries_enhanced.jpg"]
- 
-    # Return the template with the items passed in
-
-    return render_template('index.html', MarsPhotos=MarsPhotos, MarsPhotos1=MarsPhotos1, News=News, img_url=img_url, paragraph=paragraph, Table=MarsFacts2, Jpegs=Jpegs)
-
-   
-
-if __name__ == "__main__":
-    app.run(debug=True)

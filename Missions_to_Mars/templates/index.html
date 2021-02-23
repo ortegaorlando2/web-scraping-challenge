@@ -42,6 +42,8 @@
                 
             
             <br>
+            <hr>
+            <hr>
         <h2>What's New</h2>
                 <table>
                     <tr>
@@ -55,16 +57,39 @@
                     </tr>
 
                 </table>
-            
+                
+        <hr>
+        <hr>
+        <!-- <h5>Mars pictures</h5>
+        <div class="row" id="pics">
+            <div class="col-md-12">
+                <table>
+                   <tr>
+                    <div class="col-lg-4">
+                        <div class="card" style="width: 20rem;">
+                            <div class="card-body">
+                    {% for pio in MarsPhotos1 %}
+                        <th>
+                           <a href="{{pio}}">
+                               <img src="{{pio}}" style="width:10px; height:10px;">
+                           </a>
+                        </th>
+                    {% endfor %}
+                   </tr>
+                </table>
+            </div>
+        </div> -->
+    
+ 
     
         <div class="row" id="Mars-Stuff">
             <div class="col-md-12">
                 <h2>Mars Hemispheres</h2>
-                <h4>Click each image to see a large picture</h4>
+                <h4>Click the link to see a large picture</h4>
                 <table>
                     <!-- <tr> -->
                         <th>Mars Hemispheres</th>
-                        <th>Image</th>
+                        <th> Images/ </th>
                         <th>Images https</th>
                     <!-- </tr> -->
                 {% for pho in MarsPhotos %}
@@ -76,9 +101,10 @@
                                     <h4 class="card-title">{{pho.Hemisphere}}</h4>
                                 </td>
                                 <th>
-                                    <img href="{{pho.Image}}">
-                                        <img src="{{pho.Image}}"></a>
-                                        <!-- style="width:62px;height:68px;" -->
+                                    
+                                    <!-- <a href="">
+                                        <img src="" style="width:100px; height:100px;"></a> -->
+                                        
                                 </th>
                                 <th>
                                     <a href="{{pho.Image}}">Link</a>
